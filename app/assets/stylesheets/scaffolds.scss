@@ -39,3 +39,15 @@
   border-collapse: collapse;
   
 }
+
+select {
+  border: 1px solid #CCC;
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: .2rem;
+}

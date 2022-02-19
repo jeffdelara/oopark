@@ -1,20 +1,43 @@
 h1.text-2xl.font-bold.text-center.p-3 Ayala Corp Parking Complex
 
-- @parking.each do |rows|
-  div.parking-grid
-    - rows.each do |slot|
-      - if slot.nil?
-        div = 
-        - next
+div.grid.grid-cols-4
+  div.col-span-3.border
+    - @parking.each_with_index do |rows, r_index|
+      
+      div.parking-grid
+        - rows.each_with_index do |slot, c_index|
+          - if slot.nil?
+            div.text-gray-200 = "#{c_index}, #{r_index}"
+            - next
 
-      - if slot.class == ParkingSlot 
-        div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100')
-          = slot.vacant? ? slot.lot_size.code : "#{slot.car.plate_number} #{slot.car.car_size.name}"
-        - next 
+          - if slot.class == ParkingSlot 
+            div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100')
+              = slot.vacant? ? "#{slot.lot_size.code} #{slot.id}" : "#{slot.car.plate_number} #{slot.car.car_size.name}"
+            - next 
 
-      - if slot.class == EntryPoint 
-        div.bg-yellow-100 
-          = slot.name
-        - next
+          - if slot.class == EntryPoint 
+            div.bg-yellow-100 
+              = slot.name
+            - next
+
+  div.p-6.pt-2.text-xl
+    h2.text-3xl.font-semibold Park a car 
+    hr
+    = form_with url: cars_path, method: :post, model: Car.new do |f|
+      p = f.label :plate_number 
+      = f.text_field :plate_number, class: 'border w-full text-3xl px-1 py-2 text-center'
+
+      p = f.label :car_size_id 
+      = f.select :car_size_id, CarSize.all.map { |car_size| [car_size.name, car_size.id] }
+
+      p = f.label :in, "Date time IN"
+      = f.datetime_field :in, class: 'border w-full'
+
+      p = f.label :entry_point_id 
+      = f.select :entry_point_id, EntryPoint.all.map { |entry| [entry.name, entry.id] } 
+
+      = f.submit "Park", class: 'bg-indigo-500 block w-full py-2 my-3 font-semibold text-white cursor-pointer'
+      p.text-center parking slot to be assigned 
+
 
 = link_to 'New Parking Slot', new_parking_slot_path 
