@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Entry Points</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>X</th>
+      <th>Y</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entry_points.each do |entry_point| %>
+      <tr>
+        <td><%= entry_point.name %></td>
+        <td><%= entry_point.x %></td>
+        <td><%= entry_point.y %></td>
+        <td><%= link_to 'Show', entry_point %></td>
+        <td><%= link_to 'Edit', edit_entry_point_path(entry_point) %></td>
+        <td><%= link_to 'Destroy', entry_point, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Entry Point', new_entry_point_path %>

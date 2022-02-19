@@ -1,0 +1,12 @@
+h1 Ayala Corp Parking Complex
+
+
+- @parking.each do |rows|
+  - rows.each do |slot|
+    - if slot.nil?
+      span = 0
+    - else 
+      = slot.lot_size.code
+
+
+= link_to 'New Parking Slot', new_parking_slot_path 

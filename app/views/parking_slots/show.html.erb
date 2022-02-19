@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>X:</strong>
+  <%= @parking_slot.x %>
+</p>
+
+<p>
+  <strong>Y:</strong>
+  <%= @parking_slot.y %>
+</p>
+
+<p>
+  <strong>Lot size:</strong>
+  <%= @parking_slot.lot_size_id %>
+</p>
+
+<p>
+  <strong>Vacant:</strong>
+  <%= @parking_slot.vacant %>
+</p>
+
+<%= link_to 'Edit', edit_parking_slot_path(@parking_slot) %> |
+<%= link_to 'Back', parking_slots_path %>

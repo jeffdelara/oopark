@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plate_number: MyString
+  car_size: one
+  in: 2022-02-18 18:24:24
+  out: 2022-02-18 18:24:24
+  parking_slot_id: 1
+  entry_point_id: 1
+
+two:
+  plate_number: MyString
+  car_size: two
+  in: 2022-02-18 18:24:24
+  out: 2022-02-18 18:24:24
+  parking_slot_id: 1
+  entry_point_id: 1

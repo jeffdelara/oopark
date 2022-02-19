@@ -1,0 +1,32 @@
+<%= form_with(model: entry_point) do |form| %>
+  <% if entry_point.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(entry_point.errors.count, "error") %> prohibited this entry_point from being saved:</h2>
+
+      <ul>
+        <% entry_point.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :x %>
+    <%= form.number_field :x %>
+  </div>
+
+  <div class="field">
+    <%= form.label :y %>
+    <%= form.number_field :y %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
