@@ -1,6 +1,9 @@
 module ParkingSlots
   
   class ParkingComplex 
+
+    attr_reader :grid
+
     def initialize(width=16, height=12)
       @width = width
       @height = height
@@ -8,7 +11,7 @@ module ParkingSlots
 
     def generate(parking_slots)
       @grid = create_parking_grid(@height, @width)
-      parking_area = populate_parking_slots(ParkingSlot.all)
+      populate_parking_slots(parking_slots)
     end
     
     def create_parking_grid(height, width)
@@ -22,6 +25,13 @@ module ParkingSlots
 
       @grid
     end
+
+    # def place_cars(cars)
+    #   cars.each do |car|
+    #     parking_slot = @grid[car.parking_slot.y][car.parking_slot.x]
+    #     parking_slot.occupying_car = car  
+    #   end
+    # end
   end
 
 end

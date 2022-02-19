@@ -5,8 +5,16 @@ h1.text-2xl.font-bold.text-center.p-3 Ayala Corp Parking Complex
     - rows.each do |slot|
       - if slot.nil?
         div = 
-      - else 
+        - next
+
+      - if slot.class == ParkingSlot 
         div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100')
-          = slot.lot_size.code
+          = slot.vacant? ? slot.lot_size.code : "#{slot.car.plate_number} #{slot.car.car_size.name}"
+        - next 
+
+      - if slot.class == EntryPoint 
+        div.bg-yellow-100 
+          = slot.name
+        - next
 
 = link_to 'New Parking Slot', new_parking_slot_path 

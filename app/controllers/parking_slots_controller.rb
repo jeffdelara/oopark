@@ -4,7 +4,10 @@ class ParkingSlotsController < ApplicationController
   # GET /parking_slots
   def index
     parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
-    @parking = parking_complex.generate(ParkingSlot.all)
+    parking_complex.generate(ParkingSlot.all + EntryPoint.all)
+    # parking_complex.place_cars(Car.all)
+
+    @parking = parking_complex.grid
   end
 
   # GET /parking_slots/1
