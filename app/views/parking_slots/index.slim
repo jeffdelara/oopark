@@ -1,12 +1,12 @@
-h1 Ayala Corp Parking Complex
-
+h1.text-2xl.font-bold.text-center.p-3 Ayala Corp Parking Complex
 
 - @parking.each do |rows|
-  - rows.each do |slot|
-    - if slot.nil?
-      span = 0
-    - else 
-      = slot.lot_size.code
-
+  div.parking-grid
+    - rows.each do |slot|
+      - if slot.nil?
+        div = 
+      - else 
+        div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100')
+          = slot.lot_size.code
 
 = link_to 'New Parking Slot', new_parking_slot_path 

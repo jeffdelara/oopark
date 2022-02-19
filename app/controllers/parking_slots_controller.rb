@@ -3,9 +3,8 @@ class ParkingSlotsController < ApplicationController
 
   # GET /parking_slots
   def index
-    @parking_slots = ParkingSlot.all
     parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
-    @parking = parking_complex.generate(@parking_slots)
+    @parking = parking_complex.generate(ParkingSlot.all)
   end
 
   # GET /parking_slots/1
