@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   resources :entry_points
 
   resources :cars
+  delete 'unpark', to: 'cars#destroy'
 
 end

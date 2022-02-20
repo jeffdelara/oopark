@@ -18,6 +18,19 @@ class CarsController < ApplicationController
     end
   end
 
+  def destroy
+    car = Car.find_by(plate_number: params[:plate_number])
+    car.out = params[:out]
+
+    if car 
+      fees = car.unpark
+      
+    else
+      redirect_to root_path
+    end
+
+  end
+
 
   private 
 
