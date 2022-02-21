@@ -1,0 +1,37 @@
+= link_to "Back", root_path, class: 'text-indigo-600 text-center block mt-6'
+
+div.border.w-1/3.mx-auto.my-6.p-6.rounded.shadow
+  div Plate #
+  h1.text-3xl.font-bold.mb-4 = @history.plate_number
+  hr 
+  div.mt-4 
+    | Vehicle: 
+    = @history.car_size.name 
+    |  / Lot size: 
+    = @history.lot_size.name 
+  div
+    | Time in: 
+    = @history.time_in 
+  div 
+    | Time out: 
+    = @history.time_out
+  div 
+    = @history.hours_parked
+    |  hours parked
+
+  div.mt-6 
+    h2.text-xl.mb-3 Charges
+    hr
+    ul.mt-3 
+      li 
+        | Flat rate charge: 
+        = @history.flat_rate_charge
+      li 
+        | Continuous rate charge: 
+        = @history.continuous_rate_charge
+      li 
+        | Lot size charge: 
+        = @history.lot_size_charge
+      li 
+        | Total: 
+        = @history.total_charge

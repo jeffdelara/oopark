@@ -12,7 +12,7 @@ div.grid.grid-cols-4
 
           - if slot.class == ParkingSlot 
             div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100')
-              = slot.vacant? ? "#{slot.lot_size.code} #{slot.id}" : "#{slot.car.plate_number} #{slot.car.car_size.name}"
+              = slot.vacant? ? "#{slot.lot_size.code}" : "#{slot.car.plate_number}"
             - next 
 
           - if slot.class == EntryPoint 
@@ -25,7 +25,7 @@ div.grid.grid-cols-4
     hr
     = form_with url: cars_path, method: :post, model: Car.new do |f|
       p = f.label :plate_number 
-      = f.text_field :plate_number, class: 'border w-full text-3xl px-1 py-2 text-center'
+      = f.text_field :plate_number, class: 'border w-full text-3xl px-1 py-2 text-center', required: true
 
       p = f.label :car_size_id 
       = f.select :car_size_id, CarSize.all.map { |car_size| [car_size.name, car_size.id] }
@@ -36,15 +36,15 @@ div.grid.grid-cols-4
       p = f.label :entry_point_id 
       = f.select :entry_point_id, EntryPoint.all.map { |entry| [entry.name, entry.id] } 
 
+      p.text-sm.mt-4.text-center parking slot to be assigned 
       = f.submit "Park", class: 'bg-indigo-500 block w-full py-2 my-3 font-semibold text-white cursor-pointer'
-      p.text-center parking slot to be assigned 
 
 
     h2.text-3xl.font-semibold.mt-6 Unpark 
     hr
     = form_with url: unpark_path, method: :delete do |f|
       p = f.label :plate_number 
-      = f.text_field :plate_number, class: 'border w-full text-3xl px-1 py-2 text-center'
+      = f.text_field :plate_number, class: 'border w-full text-3xl px-1 py-2 text-center', required: true
 
       p = f.label :out, "Time OUT"
       = f.datetime_field :out, class: 'border w-full', required: true

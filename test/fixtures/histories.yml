@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plate_number: MyString
+  car_size_id: one
+  time_in: 2022-02-20 16:16:22
+  time_out: 2022-02-20 16:16:22
+  parking_slot_id: 1
+  lot_size_id: 1
+  entry_point_id: 1
+  hours_parked: 1.5
+  flat_rate_charge: 1.5
+  continuous_rate_charge: 1.5
+  lot_size_charge: 1.5
+  total_charge: 1.5
+
+two:
+  plate_number: MyString
+  car_size_id: two
+  time_in: 2022-02-20 16:16:22
+  time_out: 2022-02-20 16:16:22
+  parking_slot_id: 1
+  lot_size_id: 1
+  entry_point_id: 1
+  hours_parked: 1.5
+  flat_rate_charge: 1.5
+  continuous_rate_charge: 1.5
+  lot_size_charge: 1.5
+  total_charge: 1.5

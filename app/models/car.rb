@@ -11,13 +11,15 @@ class Car < ApplicationRecord
     entry_point = EntryPoint.find(self[:entry_point_id])
     parking_slot = self.find_parking_slot_from(entry_point)
 
-    # TODO: Check if previously parked (1 hr time window)
-
     return false if parking_slot.nil? 
     
+    car = self.find_previously_parked(self[:plate_number])
+    
+    self[:in] = car.time_in  if car 
     self[:parking_slot_id] = parking_slot.id
     
     return parking_slot if self.save 
+    
     false
   end
 
@@ -35,31 +37,40 @@ class Car < ApplicationRecord
 
   private 
 
+  def find_previously_parked(plate)
+    now = self[:in].to_time  
+    before = now - 3600
+
+    History.where(plate_number: self[:plate_number], time_out: before..now)
+      .order(time_out: :DESC).first
+  end
+
   def get_charges(hours)
-    
     charges = {
       hours: hours, 
       flat_rate: 40, 
-      continous_rate: 0, 
+      continuous_rate: 0, 
       lot_size_charge: 0, 
       total: 40
     }
     
     # round up
     hours = hours.ceil
-
     return charges if hours <= 3
     
-    charges[:continous_rate] = (hours / 24) * 5_000
-    
-    charges[:lot_size_charge] = 
-      hours < 24 ? 
-      self.compute_lot_size_charge(hours - 3) : 
-      self.compute_lot_size_charge(hours % 24)
+    days_parked = hours / 24
+    hours_for_lot_rate = days_parked > 0 ? hours % 24 : hours - 3
 
-    charges[:total] += charges[:continous_rate] + charges[:lot_size_charge]
+    charges[:continuous_rate] = days_parked * 5_000
+    charges[:flat_rate] = days_parked > 0 ? 0 : 40
+    charges[:lot_size_charge] = self.compute_lot_size_charge(hours_for_lot_rate)
+    charges[:total] = self.compute_total(charges)
 
     charges 
+  end
+
+  def compute_total(charges)
+    charges[:flat_rate] + charges[:continuous_rate] + charges[:lot_size_charge]
   end
 
   def compute_lot_size_charge(hours)

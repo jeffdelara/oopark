@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'histories/show'
   root 'parking_slots#index'
 
   resources :parking_slots
@@ -6,5 +7,6 @@ Rails.application.routes.draw do
 
   resources :cars
   delete 'unpark', to: 'cars#destroy'
+  get 'summary/:history_id', to: 'histories#show', as: 'summary'
 
 end
