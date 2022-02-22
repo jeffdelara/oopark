@@ -26,10 +26,10 @@
     <%= form.select :lot_size_id, LotSize.all.map { |lot| [lot.name, lot.id]  } %>
   </div>
 
-  <div class="field">
+  <!-- <div class="field">
     <%= form.label :vacant %>
     <%= form.check_box :vacant %>
-  </div>
+  </div> -->
 
   <div class="actions">
     <%= form.submit "Submit", class: 'bg-indigo-500 block w-full py-2 my-3 font-semibold text-white cursor-pointer' %>

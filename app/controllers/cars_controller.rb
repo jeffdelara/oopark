@@ -1,10 +1,8 @@
 class CarsController < ApplicationController
 
-  def index 
-  end
+  def index; end
 
-  def new 
-  end
+  def new; end
 
   def create 
     car = Car.new(allowed)

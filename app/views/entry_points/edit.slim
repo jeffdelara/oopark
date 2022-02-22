@@ -1,0 +1,17 @@
+= render 'layouts/header'
+
+div.grid.grid-cols-4
+  = render 'parking_slots/map', parking_slot: @entry_point 
+
+  div.p-6.pt-2.text-xl
+    h2.text-3xl.font-semibold Editing Parking Slot 
+    hr
+    = render 'form', entry_point: @entry_point
+    = link_to 'Delete', entry_point_path(@entry_point), :method => :delete, data: {confirm: "Are you sure you want to delete?"}
+
+
+div.border-t.block.text-center.pt-3.text-sm
+  | &copy; 2022 Ayala Parking Complex. All rights reserved.
+
+
+

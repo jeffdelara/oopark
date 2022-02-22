@@ -16,12 +16,15 @@ div.grid.grid-cols-4
                 = image_tag "car-#{slot.car.car_size.code}.png"
               
               div class=(slot.vacant? ? '' : 'absolute top-0' )
-                = slot.vacant? ? "#{slot.lot_size.code}" : "#{slot.car.plate_number}"
+                - if slot.vacant? 
+                  = link_to slot.lot_size.code, edit_parking_slot_path(slot)
+                - else 
+                  = slot.car.plate_number
             - next 
 
           - if slot.class == EntryPoint 
             div.bg-yellow-100 
-              = slot.name
+              = link_to slot.name, edit_entry_point_path(slot)
             - next
 
   div.p-6.pt-2.text-xl

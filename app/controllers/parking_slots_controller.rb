@@ -1,31 +1,17 @@
 class ParkingSlotsController < ApplicationController
   before_action :set_parking_slot, only: [:show, :edit, :update, :destroy]
+  before_action :set_parking_map, only: [:index, :new, :edit]
 
-  # GET /parking_slots
-  def index
-    parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
-    parking_complex.generate(ParkingSlot.all + EntryPoint.all)
+  def index; end
 
-    @parking = parking_complex.grid
-  end
+  def show; end
 
-  # GET /parking_slots/1
-  def show
-  end
-
-  # GET /parking_slots/new
   def new
-    parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
-    parking_complex.generate(ParkingSlot.all + EntryPoint.all)
-    @parking = parking_complex.grid
     @parking_slot = ParkingSlot.new
   end
 
-  # GET /parking_slots/1/edit
-  def edit
-  end
+  def edit; end
 
-  # POST /parking_slots
   def create
     @parking_slot = ParkingSlot.new(parking_slot_params)
 
@@ -36,28 +22,30 @@ class ParkingSlotsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /parking_slots/1
   def update
     if @parking_slot.update(parking_slot_params)
-      redirect_to @parking_slot, notice: 'Parking slot was successfully updated.'
+      redirect_to root_path, notice: 'Parking slot was successfully updated.'
     else
       render :edit
     end
   end
 
-  # DELETE /parking_slots/1
   def destroy
     @parking_slot.destroy
     redirect_to parking_slots_url, notice: 'Parking slot was successfully destroyed.'
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+    def set_parking_map 
+      parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
+      parking_complex.generate(ParkingSlot.all + EntryPoint.all)
+      @parking = parking_complex.grid
+    end
+
     def set_parking_slot
       @parking_slot = ParkingSlot.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def parking_slot_params
       params.require(:parking_slot).permit(:x, :y, :lot_size_id, :vacant)
     end
