@@ -6,16 +6,17 @@ class Car < ApplicationRecord
   belongs_to :car_size
   belongs_to :parking_slot
   
+  FLAT_RATE = 40
 
   def park
     entry_point = EntryPoint.find(self[:entry_point_id])
     parking_slot = self.find_parking_slot_from(entry_point)
 
-    return false if parking_slot.nil? 
+    return false unless parking_slot.present? 
     
     car = self.find_previously_parked(self[:plate_number])
     
-    self[:in] = car.time_in  if car 
+    self[:in] = car.time_in if car 
     self[:parking_slot_id] = parking_slot.id
     
     return parking_slot if self.save 
@@ -46,12 +47,13 @@ class Car < ApplicationRecord
   end
 
   def get_charges(hours)
+    
     charges = {
       hours: hours, 
-      flat_rate: 40, 
+      flat_rate: FLAT_RATE, 
       continuous_rate: 0, 
       lot_size_charge: 0, 
-      total: 40
+      total: FLAT_RATE
     }
     
     # round up
@@ -62,7 +64,7 @@ class Car < ApplicationRecord
     hours_for_lot_rate = days_parked > 0 ? hours % 24 : hours - 3
 
     charges[:continuous_rate] = days_parked * 5_000
-    charges[:flat_rate] = days_parked > 0 ? 0 : 40
+    charges[:flat_rate] = days_parked > 0 ? 0 : FLAT_RATE
     charges[:lot_size_charge] = self.compute_lot_size_charge(hours_for_lot_rate)
     charges[:total] = self.compute_total(charges)
 

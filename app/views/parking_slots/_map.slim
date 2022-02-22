@@ -1,0 +1,22 @@
+div.col-span-3.border-r
+  - @parking.each_with_index do |rows, r_index|
+    
+    div.parking-grid
+      - rows.each_with_index do |slot, c_index|
+        - if slot.nil?
+          div.text-gray-300 = "#{c_index}, #{r_index}"
+          - next
+
+        - if slot.class == ParkingSlot 
+          div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100 relative text-xs')
+            - unless slot.vacant?
+              = image_tag "car-#{slot.car.car_size.code}.png"
+            
+            div class=(slot.vacant? ? '' : 'absolute top-0' )
+              = slot.vacant? ? "#{slot.lot_size.code}" : "#{slot.car.plate_number}"
+          - next 
+
+        - if slot.class == EntryPoint 
+          div.bg-yellow-100 
+            = slot.name
+          - next

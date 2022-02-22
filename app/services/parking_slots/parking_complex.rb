@@ -25,13 +25,6 @@ module ParkingSlots
 
       @grid
     end
-
-    # def place_cars(cars)
-    #   cars.each do |car|
-    #     parking_slot = @grid[car.parking_slot.y][car.parking_slot.x]
-    #     parking_slot.occupying_car = car  
-    #   end
-    # end
   end
 
 end

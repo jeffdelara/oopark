@@ -1,0 +1,23 @@
+= render 'layouts/header'
+
+div.grid.grid-cols-4
+  = render 'parking_slots/map'
+
+  div.p-6.pt-2.text-xl
+    h2.text-3xl.font-semibold New Entry Point (Gate) 
+    hr
+    = render 'form', entry_point: @entry_point
+
+
+div.border-t.block.text-center.pt-3.text-sm
+  | &copy; 2022 Ayala Parking Complex. All rights reserved.
+
+
+
+
+
+<h1>New Entry Point</h1>
+
+= render 'form', entry_point: @entry_point
+
+<%= link_to 'Back', entry_points_path %>

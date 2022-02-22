@@ -5,7 +5,6 @@ class ParkingSlotsController < ApplicationController
   def index
     parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
     parking_complex.generate(ParkingSlot.all + EntryPoint.all)
-    # parking_complex.place_cars(Car.all)
 
     @parking = parking_complex.grid
   end
@@ -16,6 +15,9 @@ class ParkingSlotsController < ApplicationController
 
   # GET /parking_slots/new
   def new
+    parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
+    parking_complex.generate(ParkingSlot.all + EntryPoint.all)
+    @parking = parking_complex.grid
     @parking_slot = ParkingSlot.new
   end
 
@@ -28,7 +30,7 @@ class ParkingSlotsController < ApplicationController
     @parking_slot = ParkingSlot.new(parking_slot_params)
 
     if @parking_slot.save
-      redirect_to @parking_slot, notice: 'Parking slot was successfully created.'
+      redirect_to new_parking_slot_path, notice: 'Parking slot was successfully created.'
     else
       render :new
     end

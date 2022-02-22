@@ -8,6 +8,8 @@ class CarsController < ApplicationController
 
   def create 
     car = Car.new(allowed)
+    car.plate_number = allowed[:plate_number].upcase
+
     slot = car.park
 
     if slot 
@@ -19,30 +21,17 @@ class CarsController < ApplicationController
   end
 
   def destroy
-    car = Car.find_by(plate_number: params[:plate_number])
+    car = Car.find_by(plate_number: params[:plate_number].upcase)
     
     if car 
       car.out = params[:out]
       fees = car.unpark
 
-      history = 
-        History.create(
-          plate_number: car.plate_number, 
-          car_size_id: car.car_size_id, 
-          time_in: car.in,
-          time_out: params[:out],
-          parking_slot_id: car.parking_slot_id, 
-          lot_size_id: car.parking_slot.lot_size_id, 
-          entry_point_id: car.entry_point_id, 
-          hours_parked: fees[:hours], 
-          flat_rate_charge: fees[:flat_rate], 
-          continuous_rate_charge: fees[:continuous_rate], 
-          lot_size_charge: fees[:lot_size_charge], 
-          total_charge: fees[:total]
-        )
+      history = Cars::CarHistory.new(car, fees)
+      car_history = history.create(car.out)
 
       car.destroy
-      redirect_to summary_path(history.id)
+      redirect_to summary_path(car_history.id)
     else 
       redirect_to root_path
     end

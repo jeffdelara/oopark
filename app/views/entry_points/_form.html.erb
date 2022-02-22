@@ -13,20 +13,20 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: 'border w-full' %>
   </div>
 
   <div class="field">
     <%= form.label :x %>
-    <%= form.number_field :x %>
+    <%= form.number_field :x, class: 'border w-full' %>
   </div>
 
   <div class="field">
     <%= form.label :y %>
-    <%= form.number_field :y %>
+    <%= form.number_field :y, class: 'border w-full' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Submit", class: 'bg-indigo-500 block w-full py-2 my-3 font-semibold text-white cursor-pointer' %>
   </div>
 <% end %>

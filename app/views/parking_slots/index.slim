@@ -1,18 +1,22 @@
-h1.text-2xl.font-bold.text-center.p-3 Ayala Corp Parking Complex
+= render 'layouts/header'
 
 div.grid.grid-cols-4
-  div.col-span-3.border
+  div.col-span-3.border-r
     - @parking.each_with_index do |rows, r_index|
       
       div.parking-grid
         - rows.each_with_index do |slot, c_index|
           - if slot.nil?
-            div.text-gray-200 = "#{c_index}, #{r_index}"
+            div.text-gray-200 
             - next
 
           - if slot.class == ParkingSlot 
-            div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100')
-              = slot.vacant? ? "#{slot.lot_size.code}" : "#{slot.car.plate_number}"
+            div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100 relative text-xs')
+              - unless slot.vacant?
+                = image_tag "car-#{slot.car.car_size.code}.png"
+              
+              div class=(slot.vacant? ? '' : 'absolute top-0' )
+                = slot.vacant? ? "#{slot.lot_size.code}" : "#{slot.car.plate_number}"
             - next 
 
           - if slot.class == EntryPoint 
@@ -52,4 +56,6 @@ div.grid.grid-cols-4
       = f.submit "Unpark", class: 'bg-red-500 block w-full py-2 my-3 font-semibold text-white cursor-pointer'
 
 
-= link_to 'New Parking Slot', new_parking_slot_path 
+div.border-t.block.text-center.pt-3.text-sm
+  | &copy; 2022 Ayala Parking Complex. All rights reserved.
+

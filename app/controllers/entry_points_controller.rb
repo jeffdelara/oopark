@@ -12,6 +12,9 @@ class EntryPointsController < ApplicationController
 
   # GET /entry_points/new
   def new
+    parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
+    parking_complex.generate(ParkingSlot.all + EntryPoint.all)
+    @parking = parking_complex.grid
     @entry_point = EntryPoint.new
   end
 
@@ -24,7 +27,7 @@ class EntryPointsController < ApplicationController
     @entry_point = EntryPoint.new(entry_point_params)
 
     if @entry_point.save
-      redirect_to @entry_point, notice: 'Entry point was successfully created.'
+      redirect_to new_entry_point_path, notice: 'Entry point was successfully created.'
     else
       render :new
     end
