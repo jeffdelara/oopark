@@ -1,6 +1,8 @@
 class CarsController < ApplicationController
 
-  def index; end
+  def index 
+    @cars = Car.all
+  end
 
   def new; end
 
@@ -18,12 +20,30 @@ class CarsController < ApplicationController
     end
   end
 
+  def edit 
+    @car = Car.find(params[:id])
+  end
+
+  def update 
+    @car = Car.find(params[:id])
+    
+    if @car.update(allowed)
+      redirect_to cars_path, notice: 'Success update.'
+    else 
+      render 'edit'
+    end
+  end
+
   def destroy
     car = Car.find_by(plate_number: params[:plate_number].upcase)
     
     if car 
       car.out = params[:out]
       fees = car.unpark
+
+      redirect_to root_path, 
+        notice: "Are you a time traveler? You got in: #{helpers.human_date(car.in)} 
+                 but wants to unpark on #{helpers.human_date(car.out)}" and return unless fees 
 
       history = Cars::CarHistory.new(car, fees)
       car_history = history.create(car.out)

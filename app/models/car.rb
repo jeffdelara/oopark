@@ -26,6 +26,9 @@ class Car < ApplicationRecord
 
   def unpark
     hours = self.get_total_hours_parked
+    
+    return false if hours < 0
+
     charges = self.get_charges(hours)
     
     # open up parking slot
@@ -33,6 +36,10 @@ class Car < ApplicationRecord
     slot.update(vacant: true)
 
     charges
+  end
+
+  def get_running_time_parked
+    (Time.now - self[:in].to_time) / 3600
   end
 
 

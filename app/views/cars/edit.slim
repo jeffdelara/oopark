@@ -1,0 +1,13 @@
+div.w-2/4.mx-auto 
+  = form_with model: @car do |f| 
+    = f.label :plate_number
+    = f.text_field :plate_number, class: 'border'
+    = f.label :car_size_id
+    = f.select :car_size_id, CarSize.all.map { |size| [size.name, size.id] }, selected: @car.car_size_id
+    = f.label :entry_point_id 
+    = f.select :entry_point_id, EntryPoint.all.map { |entry| [entry.name, entry.id] }, selected: @car.entry_point_id 
+    = f.label :in, 'Time IN' 
+    = f.datetime_field :in, class: 'border'
+    br
+    = f.submit class: 'bg-indigo-500 block w-full py-2 my-3 font-semibold text-white cursor-pointer'
+

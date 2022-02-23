@@ -1,0 +1,20 @@
+div.p-6 
+  table.table-auto.border.w-full.text-center
+    tr
+      th Plate #
+      th Car Size 
+      th Time In 
+      th Parking Lot Size 
+      th Rate/hr 
+      th Hrs Parked
+      th 
+    - @cars.each do |car| 
+      tr.border 
+        td= car.plate_number
+        td= car.car_size.name
+        td= human_date car.in
+        td= car.parking_slot.lot_size.name
+        td= car.parking_slot.lot_size.rate_per_hour
+        td= car.get_running_time_parked
+        td
+          => link_to 'Edit', edit_car_path(car)
