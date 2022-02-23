@@ -1,5 +1,3 @@
-= render 'layouts/header'
-
 div.grid.grid-cols-4
   div.col-span-3.border-r
     - @parking.each_with_index do |rows, r_index|
@@ -11,9 +9,12 @@ div.grid.grid-cols-4
             - next
 
           - if slot.class == ParkingSlot 
-            div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100 relative text-xs')
+            - style = slot.vacant? ? "bg-#{slot.lot_size.code}" : "bg-gray-100 relative text-xs border-#{slot.lot_size.code}"
+
+            div class=(style)
               - unless slot.vacant?
-                = image_tag "car-#{slot.car.car_size.code}.png"
+                = link_to edit_car_path(slot.car) do 
+                  = image_tag "car-#{slot.car.car_size.code}.png"
               
               div class=(slot.vacant? ? '' : 'absolute top-0' )
                 - if slot.vacant? 

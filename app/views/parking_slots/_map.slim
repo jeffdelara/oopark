@@ -9,7 +9,9 @@ div.col-span-3.border-r
           - next
 
         - if slot.class == ParkingSlot 
-          div class=(slot.vacant? ? 'bg-green-100' : 'bg-gray-100 relative text-xs')
+          - style = slot.vacant? ? 'bg-green-100' : "bg-gray-100 relative text-xs"
+
+          div class=(style)
             - unless slot.vacant?
               = image_tag "car-#{slot.car.car_size.code}.png"
             

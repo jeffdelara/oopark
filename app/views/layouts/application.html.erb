@@ -12,6 +12,12 @@
   </head>
 
   <body>
+    <% if flash.present? %>
+      <% flash.each do |type, message| %>
+        <div class="<%= type %> text-center"><%= message %></div>  
+      <% end %>
+    <% end %>
+    <%= render 'layouts/header' %>
     <%= yield %>
   </body>
 </html>
