@@ -1,6 +1,6 @@
 class EntryPointsController < ApplicationController
   before_action :set_entry_point, only: [:show, :edit, :update, :destroy]
-  before_action :set_parking_slot_grid
+  before_action :set_parking_map
 
   def index
     @entry_points = EntryPoint.all
@@ -43,7 +43,7 @@ class EntryPointsController < ApplicationController
       @entry_point = EntryPoint.find(params[:id])
     end
 
-    def set_parking_slot_grid
+    def set_parking_map
       parking_complex = ParkingSlots::ParkingComplex.new(16, 12)
       parking_complex.generate(ParkingSlot.all + EntryPoint.all)
       @parking = parking_complex.grid
